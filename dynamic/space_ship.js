@@ -1,4 +1,4 @@
-﻿//---------------------------------------------------------------------------------------------------------------------
+﻿//---------------------------------------------------------------------------------------
 function SpaceShip(visualContainer, collisionManager, positionMapper, scoreManager) {
     this.baseSpaceShip = SpaceObjects;
     this.baseSpaceShip(visualContainer, collisionManager, positionMapper, scoreManager);
@@ -18,17 +18,19 @@ function SpaceShip(visualContainer, collisionManager, positionMapper, scoreManag
 
     this.pointsForSpace_ = -30;
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 SpaceShip.prototype = Object.create(SpaceObjects.prototype);
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 SpaceShip.prototype.constructor = SpaceShip;
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
+
+
 SpaceShip.prototype.registerObjectToUI = function(positionPoint) {
     SpaceObjects.prototype.registerObjectToUI.call(this, positionPoint);
 
     this.scoreManager_.increaseHabitableAndSpaceCounter();                        /// счетчик планет
 };
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 SpaceShip.prototype.destroyByObjectCollision = function() {
     if (this.isObjectAlive_) {
         SpaceObjects.prototype.destroyByObjectCollision.call(this);
@@ -37,7 +39,7 @@ SpaceShip.prototype.destroyByObjectCollision = function() {
         this.scoreManager_.establishThroughGames(this.pointsForSpace_);
     }
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 SpaceShip.prototype.destroyByClick = function() {
     if (this.isObjectAlive_) {
         SpaceObjects.prototype.destroyByClick.call(this);
@@ -45,11 +47,12 @@ SpaceShip.prototype.destroyByClick = function() {
         this.scoreManager_.decreaseHabitableAndSpaceCounter();
     }
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 SpaceShip.prototype.destroyByBorderCollision = function() {
     if (this.isObjectAlive_) {
         SpaceObjects.prototype.destroyByBorderCollision.call(this);
         this.scoreManager_.decreaseHabitableAndSpaceCounter();
     }
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
+

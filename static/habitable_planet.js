@@ -1,4 +1,4 @@
-﻿//---------------------------------------------------------------------------------------------------------------------
+﻿//---------------------------------------------------------------------------------------
 function HabitablePlanet(visualContainer, collisionManager, positionMapper, scoreManager) {
     this.baseHabitablePlanet = SpaceObjects;
     this.baseHabitablePlanet(visualContainer, collisionManager, positionMapper, scoreManager);
@@ -9,11 +9,11 @@ function HabitablePlanet(visualContainer, collisionManager, positionMapper, scor
 
     this.pointsForSpace_ = -80;
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 HabitablePlanet.prototype = Object.create(SpaceObjects.prototype);
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 HabitablePlanet.prototype.constructor = HabitablePlanet;
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 
 HabitablePlanet.prototype.registerObjectToUI = function(positionPoint) {
     SpaceObjects.prototype.registerObjectToUI.call(this, positionPoint);
@@ -21,11 +21,12 @@ HabitablePlanet.prototype.registerObjectToUI = function(positionPoint) {
     this.scoreManager_.increaseHabitableAndSpaceCounter();                        /// счетчик планет
     this.scoreManager_.increaseHabitableCounter();
 };
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 HabitablePlanet.prototype.doAction = function() {
     // обнулили действие объекта
 };
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
+
 HabitablePlanet.prototype.destroyByObjectCollision = function() {
     if (this.isObjectAlive_) {
         SpaceObjects.prototype.destroyByObjectCollision.call(this);
@@ -35,7 +36,7 @@ HabitablePlanet.prototype.destroyByObjectCollision = function() {
         this.scoreManager_.establishThroughGames(this.pointsForSpace_);
     }
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 HabitablePlanet.prototype.destroyByClick = function() {
     if (this.isObjectAlive_) {
         SpaceObjects.prototype.destroyByClick.call(this);
@@ -44,7 +45,7 @@ HabitablePlanet.prototype.destroyByClick = function() {
         this.scoreManager_.decreaseHabitableCounter();
     }
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 HabitablePlanet.prototype.destroyByBorderCollision = function() {
     if (this.isObjectAlive_) {
         SpaceObjects.prototype.destroyByBorderCollision.call(this);
@@ -52,4 +53,4 @@ HabitablePlanet.prototype.destroyByBorderCollision = function() {
         this.scoreManager_.decreaseHabitableAndSpaceCounter();
     }
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------

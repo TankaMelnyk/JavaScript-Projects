@@ -1,4 +1,4 @@
-﻿//---------------------------------------------------------------------------------------------------------------------
+﻿//---------------------------------------------------------------------------------------
 function CollisionManager(actionsManager, visualContentContainer, maxRows, maxColumns) {
     this.actionsManager_ = actionsManager;
     this.visualContentContainer_ = visualContentContainer;
@@ -9,7 +9,7 @@ function CollisionManager(actionsManager, visualContentContainer, maxRows, maxCo
     this.field = this.createField(maxRows, maxColumns);
     this.fillUserFieldByNull(this.field);
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 CollisionManager.prototype.createField = function(maxFieldRows, maxFieldColumns) {
     var arr = new Array();
     for (var i = 0; i < maxFieldRows; i++) {
@@ -18,18 +18,20 @@ CollisionManager.prototype.createField = function(maxFieldRows, maxFieldColumns)
             arr[i][j] = undefined;
         };
     };
+    //console.log("Создался двумерный массив (" + maxFieldRows + " x " + maxFieldColumns + ")---------------------------------");
     return arr;
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 CollisionManager.prototype.fillUserFieldByNull = function(field) {
     for (var i = 0; i < this.currentHeight; i++) {
         for (var j = 0; j < this.currentWidth; j++) {
             field[i][j] = null;
         };
     };
+    //console.log("Двумерный массив размером с пользовательское окно (" + this.currentHeight + " x " + this.currentWidth + ")");
     return field;
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 CollisionManager.prototype.changeFieldSize = function(newHeight, newWidth) {
     var i = 0;
     var j = 0;
@@ -77,11 +79,12 @@ CollisionManager.prototype.changeFieldSize = function(newHeight, newWidth) {
     this.currentHeight = newHeight;
 
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 CollisionManager.prototype.addObjectToField = function(spaceObject) {
     fillFieldAreaByValue(this.field, spaceObject, spaceObject);
+  //  console.log("CollisionManager.addObjectToField()");
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 function fillFieldAreaByValue(field, spaceObject, value) {
     try {
         var position = spaceObject.getPositionPoint();
@@ -98,9 +101,10 @@ function fillFieldAreaByValue(field, spaceObject, value) {
         console.error("message error = " + e.message);
     } 
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 CollisionManager.prototype.removeObjectFromField = function(spaceObject) {
     fillFieldAreaByValue(this.field, spaceObject, null);
+   // console.log("CollisionManager.removeObjectFromField()");
 }
 //---------------------------------------------------------------------------------------
 CollisionManager.prototype.checkDestination = function(objectHeight, objectWidth, posX, posY) {
@@ -114,10 +118,11 @@ CollisionManager.prototype.checkDestination = function(objectHeight, objectWidth
         }
         return null;
     } else {
+       // console.log("availableSpace --> вышли за пределы поля --> false");
         return undefined;
     }
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 CollisionManager.prototype.isPlaceAvaliable = function(objectHeight, objectWidth, posX, posY) {
     if ((posX + objectWidth) < this.currentWidth && (posY + objectHeight) < this.currentHeight) {
         for (var i = 0; i <= objectHeight; i++) {
@@ -129,10 +134,11 @@ CollisionManager.prototype.isPlaceAvaliable = function(objectHeight, objectWidth
         }
         return true;
     } else {
+        //console.log("availableSpace --> вышли за пределы поля --> false");
         return false;
     }
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 CollisionManager.prototype.moveObjectAtField = function(spaceObject, movePoint) {
     fillFieldAreaByValue(this.field, spaceObject, null);
 
@@ -141,13 +147,15 @@ CollisionManager.prototype.moveObjectAtField = function(spaceObject, movePoint) 
 
     if (x <= 0 || y <= 0) {                                     // столкнулись с границами
         spaceObject.destroyByBorderCollision();
+       // console.log("CollisionManager.moveObjectAtField() ============================== x <= 0 || y <= 0");
         return;
     }
 
     var checkResult = this.checkDestination(spaceObject.getHeight(), spaceObject.getWidth(), x, y);
 
-    if (checkResult === undefined || checkResult instanceof BlackHale) {                         // столкнулись с границами
+    if (checkResult === undefined || checkResult instanceof BlackHole) {                         // столкнулись с границами
         spaceObject.destroyByBorderCollision();
+        // console.log("CollisionManager.moveObjectAtField() ======================= this.field[y][x] === undefined");
         return;
     }
     if (checkResult !== null && checkResult !== undefined) {       // столкнулись с объектом
@@ -158,7 +166,8 @@ CollisionManager.prototype.moveObjectAtField = function(spaceObject, movePoint) 
         else {
             checkResult.destroyByObjectCollision();
             spaceObject.destroyByObjectCollision();          
-        }                    
+        }                       
+        // console.log("CollisionManager.moveObjectAtField() ========================== this.field[y][x] !== null");
         return;
     }
 
@@ -167,10 +176,11 @@ CollisionManager.prototype.moveObjectAtField = function(spaceObject, movePoint) 
             this.field[y + i][x + j] = spaceObject;
         }
     }
+    // console.log("CollisionManager.moveObjectAtField()");
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 CollisionManager.prototype.removeObject = function(spaceObject) {
     this.actionsManager_.removeObject(spaceObject);
     this.removeObjectFromField(spaceObject);
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------

@@ -7,7 +7,7 @@ function ActionsManager() {
 ActionsManager.prototype.addObject = function(obj) {
     this.activeObjects_.push(obj);
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 ActionsManager.prototype.removeObject = function (obj) {
     var index = this.activeObjects_.indexOf(obj);
     if (index === -1) {
@@ -16,8 +16,9 @@ ActionsManager.prototype.removeObject = function (obj) {
         this.activeObjects_.splice(index, 1);        
     }
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 ActionsManager.prototype.triggerActionCycle = function () {
+    //console.log("ActionsManager.prototype.triggerActionCycle");
    if (this.activeObjects_.length === 0) {
        return;
    }
@@ -25,12 +26,13 @@ ActionsManager.prototype.triggerActionCycle = function () {
         this.activeObjects_[i].doAction();
     }
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 ActionsManager.prototype.start = function () {
+    //console.log("this.actionTimer_ = setInterval(this.triggerActionCycle.bind(this), 250)");
     this.actionTimer_ = setInterval(this.triggerActionCycle.bind(this), 150);
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 ActionsManager.prototype.stop = function () {
     clearInterval(this.actionTimer_);
 }
-//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
